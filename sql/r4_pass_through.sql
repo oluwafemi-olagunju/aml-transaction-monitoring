@@ -20,6 +20,9 @@ JOIN tx AS o
 
   -- Step 2: flag accounts that passed through 45+ distinct incoming payments in
 -- a calendar week. Counts distinct incoming payments (not pairs) to avoid
+-- Threshold of 45 sits between p90 (6) and p99 (60), toward the upper end, to prioritise
+-- precision. Pass-through activity is common among legitimate high-volume accounts, so
+-- a conservative threshold limits false positives. Sensitivity to this choice is tested in Step 4
 -- many-to-many join inflation. Threshold: between p90 and p99 of weekly
 -- distinct passed-through payments (unlabelled).
 
