@@ -57,7 +57,7 @@ R5 uses a **date-aware** FATF list: Pakistan was delisted on 21 Oct 2022, Morocc
 ## Key findings
 
 ### 1. Rules rarely caught what they were named for
-A rule-to-typology matrix showed the original "structuring" rule caught **65% of smurfing but under 2% of structuring**. Profiling revealed why: in SAML-D, structuring uses **no cash**. It is many different senders each making one sub-threshold payment into the same account, visible only on the **receiving** side. Unexpectedly, the fan-in rule was the main detector of *behavioural change* typologies.
+A rule-to-typology matrix showed the original "structuring" rule caught **roughly two-thirds of smurfing but only about 2% of structuring** (65% / 1.7% over the full period; 70.3% / 2.0% in the test period). Profiling revealed why: in SAML-D, structuring uses **no cash**. It is many different senders each making one sub-threshold payment into the same account, visible only on the **receiving** side. Unexpectedly, the fan-in rule was the main detector of *behavioural change* typologies.
 
 ### 2. Low recall was structural, not just a threshold problem
 68% of suspicious accounts appear in only **one** laundering transaction, so volume rules set at the 99th percentile cannot fire on them. Laundering receivers typically had **4–8 senders per week**, while the original threshold was 10. Transaction-level recall (did investigators *see* the activity?) proved a fairer metric than account-level recall.
