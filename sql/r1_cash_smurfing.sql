@@ -1,4 +1,4 @@
--- R1: Structuring / smurfing
+-- R1: Cash smurfing (multiple sub-threshold cash deposits into one account)
 -- Flags accounts receiving 3+ cash deposits in a calendar week where the
 -- weekly total reaches 9,000+ but every individual deposit stays below 10,000.
 -- Thresholds: count = p99 of weekly deposit counts (3);
@@ -12,7 +12,7 @@ SELECT Receiver_account               AS account,
        COUNT(DISTINCT Sender_account) AS n_depositors,
        ROUND(SUM(Amount), 2)          AS total_deposited,
        ROUND(MAX(Amount), 2)          AS max_deposit,
-       'R1_structuring'               AS rule
+       'R1_cash_smurfing'             AS rule
 FROM tx
 WHERE Payment_type = 'Cash Deposit'
 GROUP BY account, wk
