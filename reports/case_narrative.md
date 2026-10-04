@@ -43,3 +43,13 @@ All 14 counterparties paying the subject in the alert week paid **no other accou
 - Expand the investigation to the 14 counterparty accounts (ownership, linked parties, onboarding details)
 - Extend the lookback beyond 2 July 2023 to trace where the retained ≈1.45M was moved
 
+## 8. Outcome and reflection (labels revealed after disposition)
+**Dataset label: not suspicious (false positive).** Alert-week activity was labelled *Normal_Fan_In* (156 transactions, ≈1.55M), *Normal_Small_Fan_Out* and *Normal_Cash_Deposits*.
+
+**Why the alert was a false positive.** The features driving the escalation (counterparties dedicated to a single account, uniform payment counts, and a one-week concentration of funds) are strong mule indicators in practice, but the SAML-D generator produces legitimate fan-in with the same structure. In this dataset they do not discriminate between normal and suspicious behaviour.
+
+**Was escalation reasonable?** Yes, on the information available. The SAR threshold is reasonable suspicion, and without KYC or expected-activity data the activity lacked an apparent economic rationale. In practice the recommended RFI would likely have resolved the alert (for example, by identifying a business receiving bulk customer payments).
+
+**Consistency with system performance.** The outcome matches the measured precision of the queue: even top-25 alerts are false positives about 88% of the time, and multi-rule alerts showed no higher precision (2.26%).
+
+**Tuning insight (hypothesis tested and rejected).** I hypothesised that laundering senders would be one-time accounts. The data showed the opposite: Structuring and Fan_In senders have a median of ~135 lifetime transactions, while every legitimate fan-in sender has exactly 12 (p50 = p90 = 12 across 175,909 accounts). Although sender activity separates the groups almost perfectly, the pattern reflects how the simulator schedules normal fan-in rather than real laundering behaviour, where funding accounts are often new or low-activity. It was therefore **not** adopted as a rule feature: a rule must be conceptually sound, not merely predictive on synthetic data.
