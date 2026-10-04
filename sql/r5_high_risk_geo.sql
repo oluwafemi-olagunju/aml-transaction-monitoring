@@ -36,16 +36,17 @@ WHERE t.Sender_bank_location <> t.Receiver_bank_location
   AND (hr_r.country IS NOT NULL OR hr_s.country IS NOT NULL);
 
   -- Step 2: flag account-weeks with 200000+ total value to/from jurisdictions
--- listed on the transaction date. Threshold: between p90 (99,100) and
--- p99 (314,045) of weekly high-risk exposure (unlabelled). The minority moves large sums which is where
--- the risk concentrates hence the selected threshold.
+-- listed on the transaction date. Threshold of 200,000 sits between p90 (99,100) and
+-- p99 (314,045) of weekly high-risk exposure (unlabelled). Weekly exposure is heavily skewed (p90 is about 19x p50)
+-- , so risk concentrates in the tail; this threshold targets that tail while keeping the queue
+-- at about 49 lerts per week.
 
 CREATE OR REPLACE TABLE r5_alerts AS
 SELECT account,
        date_trunc('week', ts)                AS wk,
        COUNT(*)                              AS n_tx,
        ROUND(SUM(Amount), 2)                 AS total_amount,
-       STRING_AGG(DISTINCT hr_country, ', ') AS countries,
+       STRING_AGG(DISTINCT hr_country, ', ' ORDER BY hr_country) AS countries,
        'R5_high_risk_geo'                    AS rule
 FROM r5_tx
 GROUP BY account, wk
