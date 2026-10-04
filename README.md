@@ -1,10 +1,8 @@
-# aml-transaction-monitoring
-Rule-based transaction monitoring on synthetic AML data: detection performance and case investigation
 # Rule-Based Transaction Monitoring on Synthetic AML Data
 
 Designing, evaluating and tuning anti-money laundering (AML) monitoring rules on 9.5 million synthetic transactions, with held-out validation, alert prioritisation and a blind case investigation.
 
-**Author:** Oluwafemi Olagunju · Financial crime investigator (AML/KYC, fraud) · [LinkedIn](www.linkedin.com/in/oluwafemiolagunju3)
+**Author:** Oluwafemi Olagunju · Financial crime investigator (AML/KYC, fraud) · [LinkedIn](https://www.linkedin.com/in/oluwafemiolagunju3)
 
 ---
 
@@ -142,30 +140,35 @@ I selected the top-ranked alert **without viewing its label**, investigated it, 
 
 ## Repository structure
 
-├── sql/ # One file per rule; thresholds documented in comments
-│ ├── r1_cash_smurfing.sql
-│ ├── r2_fan_in.sql # retired
-│ ├── r3_fan_out.sql # retired
-│ ├── r4_pass_through.sql # retired
-│ ├── r5_high_risk_geo.sql
-│ ├── r6_cash_withdrawals.sql
-│ └── r7_inbound_structuring.sql
+```text
+├── sql/                         # One file per rule; thresholds documented in comments
+│   ├── r1_cash_smurfing.sql
+│   ├── r2_fan_in.sql            # retired
+│   ├── r3_fan_out.sql           # retired
+│   ├── r4_pass_through.sql      # retired
+│   ├── r5_high_risk_geo.sql
+│   ├── r6_cash_withdrawals.sql
+│   └── r7_inbound_structuring.sql
 ├── notebooks/
-│ ├── 01_exploration.ipynb # Data loading, exploration, threshold research
-│ ├── 02_rules.ipynb # Rule execution
-│ ├── 03_evaluation.ipynb # Precision, recall, diagnostics, redesign, prioritisation
-│ ├── 04_case_study.ipynb # Blind investigation
-│ └── 05_charts.ipynb # Figures
-├── reports/ # Charts and case narrative
+│   ├── 01_exploration.ipynb     # Data loading, exploration, threshold research
+│   ├── 02_rules.ipynb           # Rule execution
+│   ├── 03_evaluation.ipynb      # Precision, recall, diagnostics, redesign, prioritisation
+│   ├── 04_case_study.ipynb      # Blind investigation
+│   └── 05_charts.ipynb          # Figures
+├── reports/                     # Charts and case narrative
 └── requirements.txt
-
+```
 
 ## How to run
 
 1. Clone the repo and create an environment:
-python -m venv .venv
-.venv\Scripts\activate # Windows (macOS/Linux: source .venv/bin/activate)
-pip install -r requirements.txt
+
+```bash
+   python -m venv .venv
+   .venv\Scripts\activate        # Windows (macOS/Linux: source .venv/bin/activate)
+   pip install -r requirements.txt
+```
+
 2. Download SAML-D from Kaggle and save it as `data/SAML-D.csv`.
 3. Run the notebooks in order (01 → 05). Notebook 01 builds the `tx` table in `aml.duckdb`; notebook 02 runs the rules (R4 is the slowest, at a few minutes).
 
